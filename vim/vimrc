@@ -1,0 +1,152 @@
+set nocompatible
+set encoding=utf-8
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-commentary'
+Bundle 'tpope/vim-sleuth'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-rails'
+Bundle 'tpope/vim-endwise'
+Bundle 'chriskempson/base16-vim'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'kien/ctrlp.vim'
+Bundle 'ervandew/supertab'
+Bundle 'godlygeek/tabular'
+Bundle 'airblade/vim-gitgutter'
+Bundle 'Lokaltog/vim-powerline'
+Bundle 'vim-ruby/vim-ruby'
+Bundle 'mattn/webapi-vim'
+Bundle 'mattn/gist-vim'
+
+syntax on
+filetype plugin indent on
+
+" Appareance
+let base16colorspace=256        " Hack for sane colors
+colorscheme base16-tomorrow     " From http://chriskempson.github.io/base16/#tomorrow
+set background=dark             " Required for Tomorrow
+set guifont=Inconsolata:h16     " The best font at the best size
+
+" General
+set number                      " Line numbers are essential
+set clipboard=unnamed           " Share system clipboard
+set numberwidth=5               " Let the gutter breath
+set ruler                       " Show the cursor position
+set shell=bash                  " Avoids munging PATH under zsh
+set cursorline                  " Highlight current line
+set showcmd                     " Show partial commands below the status line
+set history=10000               " Remember more Ex commands
+set scrolloff=10                " Have some context around the current line always on screen
+set wildmenu                    " Make tab completion for files/buffers act like bash
+set laststatus=2                " Always show the statusline, for Powerline
+set noswapfile                  " I don't like swapfiles
+set diffopt=filler,iwhite       " In diff mode, ignore whitespace changes and align unchanged lines"
+let g:Powerline_symbols='fancy' " For Powerline
+let mapleader=","               " Map leader to the comma
+
+" Buffers
+set hidden                      " Allow backgrounding buffers without writing them
+set autoread                    " Auto-reload buffers when file changed on disk
+
+" Whitespace
+set nowrap                      " Don't wrap lines
+set tabstop=2                   " A tab is two spaces 
+set shiftwidth=2                " An autoindent (with <<) is two spaces
+set expandtab                   " Use spaces, not tabs
+set backspace=indent,eol,start  " Backspace through everything in insert mode
+set list listchars=trail:·      " Display a dot for spaces
+
+" Searching
+set hlsearch                    " Highlight matches
+set incsearch                   " Incremental searching
+set ignorecase                  " Searches are case insensitive...
+set smartcase                   " ... unless they contain at least one capital letter
+set showmatch                   " Set show matching parenthesis
+
+" Splits
+set splitright                  " Open vertical buffer to the right 
+set splitbelow                  " Open horizontal buffer below
+
+" Keybindings
+  """""""""""""""""""""""""""""""""""""""""""""""""""
+
+" For tabularize
+nnoremap <leader>a :Tabularize<Space>/
+" Makes Y more consistent with other capitals.
+nnoremap Y y$
+" Disable highlight when <leader>d is pressed
+nnoremap <silent> <leader>d :noh<cr>
+" Opens .vimrc in a new tab
+nmap <leader>v :tabedit $MYVIMRC<CR>
+
+" Easier navigation between splits
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+
+" For your own good, kiddo
+map <Left>  :echo "NO!"<cr>
+map <Right> :echo "NO!"<cr>
+map <Up>    :echo "NO!"<cr>
+map <Down>  :echo "NO!"<cr>
+
+" Autocompletion for {, (, [, ", '
+inoremap {      {}<Left>
+inoremap {<CR>  {<CR>}<Esc>O
+inoremap {{     {
+inoremap {}     {}
+inoremap <expr> }  strpart(getline('.'), col('.')-1, 1) == "}" ? "\<Right>" : "}"
+
+inoremap (      ()<Left>
+inoremap (<CR>  (<CR>)<Esc>O
+inoremap ((     (
+inoremap ()     ()
+inoremap <expr> )  strpart(getline('.'), col('.')-1, 1) == ")" ? "\<Right>" : ")"
+
+inoremap [      []<Left>
+inoremap [<CR>  [<CR>]<Esc>O
+inoremap [[     [
+inoremap []     []
+inoremap <expr> ]  strpart(getline('.'), col('.')-1, 1) == "]" ? "\<Right>" : "]"
+
+inoremap "      ""<Left>
+inoremap ""     ""
+
+inoremap '     ''<Left>
+inoremap ''     ''
+
+" Language specific
+autocmd FileType cpp map <leader>c :!clear <CR> :!g++ -Wall "%:p" -o "%:p:r" && "%:p:r"<CR>
+autocmd FileType c map <leader>c :!clear <CR> :!gcc -Wall -g -O0 "%:p" -o "%:p:r" && "%:p:r"<CR>
+autocmd FileType ruby map <leader>c :!clear <CR> :!ruby % <CR>
+autocmd FileType cpp,c setlocal shiftwidth=4 sts=4 tabstop=4 expandtab
+
+" Associate .md files correctly with markdown
+au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,mdwn} set filetype=markdown
+
+" Return to last edit position when opening files
+autocmd BufReadPost *
+     \ if line("'\"") > 0 && line("'\"") <= line("$") |
+     \   exe "normal! g`\"" |
+     \ endif
+
+" From https://github.com/garybernhardt/dotfiles
+" Indent if we're at the beginning of a line. Else, do completion.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+
+inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+inoremap <s-tab> <c-n>
