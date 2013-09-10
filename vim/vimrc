@@ -1,6 +1,7 @@
-set nocompatible
-set encoding=utf-8
+set nocompatible                " Don't tolerate vi behavior
+set encoding=utf-8              " Use UTF-8
 
+" Vundle as the plugin manager
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
@@ -23,14 +24,13 @@ Bundle 'vim-ruby/vim-ruby'
 Bundle 'mattn/webapi-vim'
 Bundle 'mattn/gist-vim'
 
-syntax on
-filetype plugin indent on
-
-" Appareance
+" Appearance
 let base16colorspace=256        " Hack for sane colors
 colorscheme base16-tomorrow     " From http://chriskempson.github.io/base16/#tomorrow
 set background=dark             " Required for Tomorrow
 set guifont=Inconsolata:h16     " The best font at the best size
+syntax on                       " Enables syntax highlighting
+filetype plugin indent on       " Sane defaults
 
 " General
 set number                      " Line numbers are essential
@@ -117,8 +117,7 @@ inoremap <expr> ]  strpart(getline('.'), col('.')-1, 1) == "]" ? "\<Right>" : "]
 
 inoremap "      ""<Left>
 inoremap ""     ""
-
-inoremap '     ''<Left>
+inoremap '      ''<Left>
 inoremap ''     ''
 
 " Language specific
@@ -148,5 +147,6 @@ function! InsertTabWrapper()
     endif
 endfunction
 
+" Make use of the function defined above
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <s-tab> <c-n>
