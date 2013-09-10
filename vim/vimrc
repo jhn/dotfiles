@@ -45,7 +45,7 @@ set scrolloff=10                " Have some context around the current line alwa
 set wildmenu                    " Make tab completion for files/buffers act like bash
 set laststatus=2                " Always show the statusline, for Powerline
 set noswapfile                  " I don't like swapfiles
-set diffopt=filler,iwhite       " In diff mode, ignore whitespace changes and align unchanged lines"
+set diffopt=filler,iwhite       " In diff mode, ignore whitespace changes and align unchanged lines
 let g:Powerline_symbols='fancy' " For Powerline
 let mapleader=","               " Map leader to the comma
 
