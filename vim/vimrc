@@ -129,7 +129,7 @@ autocmd FileType make set noexpandtab
 
 " Associate .md files correctly with markdown and set width to 80 chars
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,mdwn} setlocal filetype=markdown textwidth=80
-au BufRead,BufNewFile,BufEnter *Makefile*,*makefile*,*.mk set filetype=make
+au BufRead,BufNewFile,BufEnter *Makefile*,*makefile*,*.mk set nolist filetype=make ts=4 sts=4 sw=4
 
 " Return to last edit position when opening files
 autocmd BufReadPost *
