@@ -76,7 +76,7 @@ set splitbelow                  " Open horizontal buffer below
   """""""""""""""""""""""""""""""""""""""""""""""""""
 
 " For tabularize
-nnoremap <leader>a :Tabularize<Space>/
+vnoremap <leader>a :Tabularize<Space>/
 " Makes Y more consistent with other capitals.
 nnoremap Y y$
 " Disable highlight when <leader>d is pressed
@@ -125,9 +125,11 @@ autocmd FileType cpp map <leader>c :!clear <CR> :!g++ -Wall "%:p" -o "%:p:r" && 
 autocmd FileType c map <leader>c :!clear <CR> :!gcc -Wall -g -O0 "%:p" -o "%:p:r" && "%:p:r"<CR>
 autocmd FileType ruby map <leader>c :!clear <CR> :!ruby % <CR>
 autocmd FileType cpp,c setlocal shiftwidth=4 sts=4 tabstop=4 expandtab
+autocmd FileType make set noexpandtab
 
 " Associate .md files correctly with markdown and set width to 80 chars
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,mdwn} setlocal filetype=markdown textwidth=80
+au BufRead,BufNewFile,BufEnter *Makefile*,*makefile*,*.mk set filetype=make
 
 " Return to last edit position when opening files
 autocmd BufReadPost *
