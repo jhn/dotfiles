@@ -9,6 +9,7 @@ Bundle 'gmarik/vundle'
 
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-commentary'
+Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-sleuth'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-rails'
@@ -41,7 +42,7 @@ set shell=bash                  " Avoids munging PATH under zsh
 set cursorline                  " Highlight current line
 set showcmd                     " Show partial commands below the status line
 set history=10000               " Remember more Ex commands
-set scrolloff=10                " Have some context around the current line always on screen
+set scrolloff=10                " Have some context around the current line
 set wildmenu                    " Make tab completion for files/buffers act like bash
 set laststatus=2                " Always show the statusline, for Powerline
 set noswapfile                  " I don't like swapfiles
@@ -55,28 +56,29 @@ set autoread                    " Auto-reload buffers when file changed on disk
 
 " Whitespace
 set nowrap                      " Don't wrap lines
-set tabstop=2                   " A tab is two spaces 
+set tabstop=2                   " A tab is two spaces
 set shiftwidth=2                " An autoindent (with <<) is two spaces
-set expandtab                   " Use spaces, not tabs
+set expandtab                   " Replaces tabs with spaces
 set backspace=indent,eol,start  " Backspace through everything in insert mode
-set list listchars=trail:·      " Display a dot for spaces
+set list                        " Show trailing whitespace
+set listchars=trail:·           " Display a dot for spaces
 
 " Searching
 set hlsearch                    " Highlight matches
 set incsearch                   " Incremental searching
 set ignorecase                  " Searches are case insensitive...
 set smartcase                   " ... unless they contain at least one capital letter
-set showmatch                   " Set show matching parenthesis
+set showmatch                   " Show matching parenthesis
 
 " Splits
-set splitright                  " Open vertical buffer to the right 
+set splitright                  " Open vertical buffer to the right
 set splitbelow                  " Open horizontal buffer below
 
 " Keybindings
   """""""""""""""""""""""""""""""""""""""""""""""""""
 
 " For tabularize
-vnoremap <leader>a :Tabularize<Space>/
+vnoremap <leader>a :Tabularize<Space>//<Left>
 " Makes Y more consistent with other capitals.
 nnoremap Y y$
 " Disable highlight when <leader>d is pressed
@@ -120,16 +122,24 @@ inoremap ""     ""
 inoremap '      ''<Left>
 inoremap ''     ''
 
-" Language specific
-autocmd FileType cpp map <leader>c :!clear <CR> :!g++ -Wall "%:p" -o "%:p:r" && "%:p:r"<CR>
-autocmd FileType c map <leader>c :!clear <CR> :!gcc -Wall -g -O0 "%:p" -o "%:p:r" && "%:p:r"<CR>
-autocmd FileType ruby map <leader>c :!clear <CR> :!ruby % <CR>
-autocmd FileType cpp,c setlocal shiftwidth=4 sts=4 tabstop=4 expandtab
-autocmd FileType make set noexpandtab
+" Language-specific
+  """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Associate .md files correctly with markdown and set width to 80 chars
-au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,mdwn} setlocal filetype=markdown textwidth=80
-au BufRead,BufNewFile,BufEnter *Makefile*,*makefile*,*.mk set nolist filetype=make ts=4 sts=4 sw=4
+" Associate files correctly
+au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,mdwn} set ft=markdown
+au BufRead,BufNewFile *Makefile*,*makefile*      set ft=make
+
+" Overrides for languages
+au FileType cpp,c,h  set sw=4 sts=4 ts=4
+au FileType make     set ts=4 sts=4 sw=4 nolist noexpandtab
+au FileType markdown set ts=4 sts=4 sw=4 nolist textwidth=80
+
+au FileType cpp  map <leader>c :!clear <CR> :!g++ -Wall "%:p" -o "%:p:r" && "%:p:r"<CR>
+au FileType c    map <leader>c :!clear <CR> :!gcc -Wall -g -O0 "%:p" -o "%:p:r" && "%:p:r"<CR>
+au FileType ruby map <leader>c :!clear <CR> :!ruby % <CR>
+
+" Handy functions
+  """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Return to last edit position when opening files
 autocmd BufReadPost *
@@ -139,7 +149,6 @@ autocmd BufReadPost *
 
 " From https://github.com/garybernhardt/dotfiles
 " Indent if we're at the beginning of a line. Else, do completion.
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! InsertTabWrapper()
     let col = col('.') - 1
     if !col || getline('.')[col - 1] !~ '\k'
