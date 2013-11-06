@@ -6,24 +6,16 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
-
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-commentary'
-Bundle 'tpope/vim-markdown'
-Bundle 'tpope/vim-sleuth'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-rails'
-Bundle 'tpope/vim-endwise'
+Bundle 'airblade/vim-gitgutter'
 Bundle 'chriskempson/base16-vim'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'kien/ctrlp.vim'
 Bundle 'ervandew/supertab'
 Bundle 'godlygeek/tabular'
-Bundle 'airblade/vim-gitgutter'
-Bundle 'Lokaltog/vim-powerline'
+Bundle 'kien/ctrlp.vim'
+Bundle 'tpope/vim-commentary'
+Bundle 'tpope/vim-endwise'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-surround'
 Bundle 'vim-ruby/vim-ruby'
-Bundle 'mattn/webapi-vim'
-Bundle 'mattn/gist-vim'
 
 " Appearance
 let base16colorspace=256        " Hack for sane colors
@@ -32,6 +24,18 @@ set background=dark             " Required for Tomorrow
 set guifont=Inconsolata:h16     " The best font at the best size
 syntax on                       " Enables syntax highlighting
 filetype plugin indent on       " Sane defaults
+
+" gvim only options
+if has("gui_running")
+  Bundle 'bling/vim-airline'
+
+  set guifont=Inconsolata\ for\ Powerline:h16
+  let g:airline_theme = 'base16'
+  let g:airline_powerline_fonts = 1
+  let g:airline#extensions#hunks#enabled = 0
+  let g:airline#extensions#whitespace#trailing_format = 'trail[%s]'
+  let g:airline#extensions#whitespace#mixed_indent_format = 'mix[%s]'
+endif
 
 " General
 set number                      " Line numbers are essential
@@ -47,7 +51,6 @@ set wildmenu                    " Make tab completion for files/buffers act like
 set laststatus=2                " Always show the statusline, for Powerline
 set noswapfile                  " I don't like swapfiles
 set diffopt=filler,iwhite       " In diff mode, ignore whitespace changes and align unchanged lines
-let g:Powerline_symbols='fancy' " For Powerline
 let mapleader=","               " Map leader to the comma
 
 " Buffers
@@ -130,7 +133,7 @@ au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,mdwn} set ft=markdown
 au BufRead,BufNewFile *Makefile*,*makefile*      set ft=make
 
 " Overrides for languages
-au FileType cpp,c,h  set sw=4 sts=4 ts=4
+au FileType cpp,c,h  set sw=4 sts=4 ts=4 nolist
 au FileType make     set ts=4 sts=4 sw=4 nolist noexpandtab
 au FileType markdown set ts=4 sts=4 sw=4 nolist textwidth=80
 
