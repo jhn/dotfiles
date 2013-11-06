@@ -64,7 +64,7 @@ set shiftwidth=2                " An autoindent (with <<) is two spaces
 set expandtab                   " Replaces tabs with spaces
 set backspace=indent,eol,start  " Backspace through everything in insert mode
 set list                        " Show trailing whitespace
-set listchars=trail:·           " Display a dot for spaces
+set listchars=tab:»·,trail:·    " Display a dot for spaces
 
 " Searching
 set hlsearch                    " Highlight matches
@@ -135,7 +135,7 @@ au BufRead,BufNewFile *Makefile*,*makefile*      set ft=make
 " Overrides for languages
 au FileType cpp,c,h  set sw=4 sts=4 ts=4 nolist
 au FileType make     set ts=4 sts=4 sw=4 nolist noexpandtab
-au FileType markdown set ts=4 sts=4 sw=4 nolist textwidth=80
+au FileType markdown set ts=4 sts=4 sw=4 nolist spell textwidth=80
 
 au FileType cpp  map <leader>c :!clear <CR> :!g++ -Wall "%:p" -o "%:p:r" && "%:p:r"<CR>
 au FileType c    map <leader>c :!clear <CR> :!gcc -Wall -g -O0 "%:p" -o "%:p:r" && "%:p:r"<CR>
