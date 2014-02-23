@@ -98,12 +98,6 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
-" For your own good, kiddo
-map <Left>  :echo "NO!"<cr>
-map <Right> :echo "NO!"<cr>
-map <Up>    :echo "NO!"<cr>
-map <Down>  :echo "NO!"<cr>
-
 " Autocompletion for {, (, [, ", '
 inoremap {      {}<Left>
 inoremap {<CR>  {<CR>}<Esc>O
