@@ -16,6 +16,9 @@ Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
 Bundle 'vim-ruby/vim-ruby'
+" Clojure
+Bundle 'tpope/vim-fireplace'
+Bundle 'guns/vim-clojure-static'
 
 " Appearance
 let base16colorspace=256        " Hack for sane colors
@@ -124,6 +127,10 @@ inoremap "      ""<Left>
 inoremap ""     ""
 inoremap '      ''<Left>
 inoremap ''     ''
+
+" Faster command mode
+nnoremap ;      :
+nnoremap :      ;
 
 " Language-specific
   """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
