@@ -2,10 +2,10 @@ set nocompatible                " Don't tolerate vi behavior
 set encoding=utf-8              " Use UTF-8
 
 " Vundle as the plugin manager
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-Bundle 'gmarik/vundle'
+Bundle 'gmarik/Vundle.vim'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'chriskempson/base16-vim'
 Bundle 'ervandew/supertab'
@@ -17,8 +17,10 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
 Bundle 'vim-ruby/vim-ruby'
 " Clojure
-Bundle 'tpope/vim-fireplace'
-Bundle 'guns/vim-clojure-static'
+"Bundle 'tpope/vim-fireplace'
+"Bundle 'guns/vim-clojure-static'
+
+call vundle#end()               " required
 
 " Appearance
 let base16colorspace=256        " Hack for sane colors
